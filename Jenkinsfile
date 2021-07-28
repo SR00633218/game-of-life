@@ -1,22 +1,27 @@
 pipeline {
-    agent {label 'GOL'}
-    stages{
-        stage('SCM'){
-            step{
-                git branch: 'master', url:https://github.com/SR00633218/game-of-life.git
+    agent { label 'GOL'}
+    triggers {
+        cron('H * * * *')
+        pollSCM('* * * * *')
+    }
+    stages {
+        stage('scm') {
+            steps {
+
+                git branch: 'master', url: 'https://github.com/SR00633218/game-of-life.git'
             }
         }
         stage('build') {
             steps {
                 sh 'mvn package'
+            }
+        }
     }
     post {
-        sucess{
+        success {
             archive '**/gameoflife.war'
             junit '**/TEST-*.xml'
-
         }
         
     }
-
 }
