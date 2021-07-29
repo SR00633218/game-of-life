@@ -37,12 +37,7 @@ pipeline {
             archive '**/gameoflife.war'
             junit '**/TEST-*.xml'
         }
-        always {
-            echo "Finished"
-        }
-        changed {
-            echo "Changed"
-        }
+       
         
     }
 }
