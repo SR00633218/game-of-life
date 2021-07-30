@@ -38,7 +38,7 @@ pipeline {
             }
         }
         stage('devserver'){
-            agent { label 'RHEL,'}
+            agent { label 'RHEL'}
             steps {
                 unstash name: 'golwar'
             }
