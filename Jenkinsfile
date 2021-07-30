@@ -1,8 +1,5 @@
 pipeline {
     agent { label 'GOL'}
-    triggers {
-        cron('H * * * *')
-        pollSCM('* * * * *')
     }
     parameters {
         string(name: 'BRANCH', defaultValue: 'master', description: 'Branch to build' )
@@ -12,19 +9,12 @@ pipeline {
         timeout(time: 1, unit: 'HOURS')
         retry(2)
     }
-    environment {
-        CI_ENV = 'DEV'
-    }
     stages {
         stage('scm') {
-            environment {
-                DUMMY = 'FUN'
-            }
             steps {
                 mail subject: 'BUILD Started '+env.BUILD_ID, to: 'sreenivasrambhatla@gmail.com', from: 'jenkins@qt.com', body: 'EMPTY BODY'
                 git branch: "${params.BRANCH}", url: 'https://github.com/SR00633218/game-of-life.git'
-                echo env.CI_ENV
-                echo env.DUMMY
+            
             }
         }
         stage('build') {
